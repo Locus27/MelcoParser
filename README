@@ -1,5 +1,8 @@
 This code was created to handle stitch count log files from a Melco embroidery machine. 
 The Python program imports the .csv file, reads the serial and stitch count, and passes it by serial to an Arduino.
+Signalling characters (#, !) are appended before the string to help the Arduino.
+
+The Arduino code handles the incoming traffic and controls the pacing of communication with signal strings ('open', 'ready', 'next', etc.)
 
 The Arduino used is the HiLetGo MEGA2560 + WiFi R3 (ESP8266) combo board (available from Amazon). 
 The best instructions I've found on flashing the firmware for this can be found here:
