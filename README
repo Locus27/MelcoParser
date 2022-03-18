@@ -1,0 +1,33 @@
+This code was created to handle stitch count log files from a Melco embroidery machine. 
+The Python program imports the .csv file, reads the serial and stitch count, and passes it by serial to an Arduino.
+
+The Arduino used is the HiLetGo MEGA2560 + WiFi R3 (ESP8266) combo board (available from Amazon). 
+The best instructions I've found on flashing the firmware for this can be found here:
+  https://www.gabrielcsapo.com/arduino-web-server-mega-2560-r3-built-in-esp8266/
+This is most easily accomplished with a linux system. I did several with a Raspberry Pi running Ubuntu.
+Be very aware of the dip switch settings, especially RX/TX01 vs. RX/TX03.
+ 
+The LCD used is a HiLetGo 3.5" TFT LCD (no touch).
+
+You will need PySerial. 'pip install pyserial' in a console or command line.
+
+You will also need the following libraries for the Arduino:
+  PubSubClient
+  WiFiEspAT
+  LCDWIKI_GUI
+  LCDWIKI_KBV
+
+The LCDWIKI libraries are available at: https://github.com/lcdwiki
+Follow the usual instructions for manually adding libraries to the Arduino IDE.
+
+Make sure you put the correct COM port information in the config file. 
+Also, there's a bug with the Arduino resetting the first time you run the python script due to dsr/dtr control. 
+  This doesn't happen on subsequent runs, but it does eat the data.csv file, so make a backup and be ready to restore it.
+
+If you've just uploaded the sketch to the Arduino and have the serial monitor open or haven't given enough time for the serial connection to timeout 
+you will get a 'Cannot open serial port' error.
+
+The flow in Node-Red is not posted because it contains proprietary identifying information. 
+The easiest way to recieve data is to create an mqtt-in node looking for the topic (serial #) and a text display node linked to it.
+You will have to set up an MQTT Broker (Mosquitto) and Node-Red on your own.
+You will need to add node-red-dashboard to your pallet. node-red-contrib-mqtt-broker should be included by default. 
